@@ -1,3 +1,23 @@
 .cell {
   border: 1px solid #000;
+  height: 25px;
+  width: 25px;
+}
+
+.cellHit {
+  border: 1px solid #000;
+  height: 25px;
+  width: 25px;
+  background-color: red;
+}
+
+.cellMiss {
+  border: 1px solid #000;
+  height: 25px;
+  width: 25px;
+  background-color: blue;
+}
+
+.status {
+  display: none;
 }
