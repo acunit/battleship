@@ -40,26 +40,173 @@ for (var r = 0; r < boardRows; r++) {
 // variable to place value inside array for ship position
 var ship = 1;
 
+function shipCheck(x, y) {
+  // middle board condition
+  if (x > 0 && x < 9 && y > 0 && y < 9) {
+    return board[x][y] == ship || board[x-1][y-1] == ship || board[x-1][y] == ship || board[x-1][y+1] == ship || board[x][y-1] == ship || board[x][y+1] == ship || board[x+1][y-1] == ship || board[x+1][y] == ship || board[x+1][y+1] == ship;
+    // top row (non corners) condition
+  } else if (x == 0 && y > 0 && y < 9) {
+    return board[x][y] == ship || board[x][y-1] == ship || board[x][y+1] == ship || board[x+1][y] == ship || board[x+1][y-1] == ship || board[x+1][y+1] == ship;
+    // bottom row (non corners) condition
+  } else if (x == 9 && y > 0 && y < 9) {
+    return board[x][y] == ship || board[x][y-1] == ship || board[x][y+1] == ship || board[x-1][y] == ship || board[x-1][y-1] == ship || board[x-1][y+1] == ship;
+    // left edge (non corners) condition
+  } else if (x > 0 && x < 9 && y == 0) {
+    return board[x][y] == ship || board[x-1][y] == ship || board[x+1][y] == ship || board[x-1][y+1] == ship || board[x][y+1] == ship || board[x+1][y+1] == ship;
+    // right edge (non corners) condition
+  } else if (x > 0 && x < 9 && y == 9) {
+    return board[x][y] == ship || board[x-1][y] == ship || board[x+1][y] == ship || board[x-1][y-1] == ship || board[x][y-1] == ship || board[x+1][y-1] == ship;
+    // upper left corner
+  } else if (x == 0 && y == 0) {
+    return board[x][y] == ship || board[x][y+1] == ship || board[x+1][y] == ship || board[x+1][y+1] == ship;
+    // upper right corner
+  } else if (x == 0 && y == 9) {
+    return board[x][y] == ship || board[x][y-1] == ship || board[x+1][y-1] == ship || board[x+1][y] == ship;
+    // bottom left corner
+  } else if (x == 9 && y == 0) {
+    return board[x][y] == ship || board[x-1][y] == ship || board[x-1][y+1] == ship || board[x][y+1] == ship;
+    // bottom right corner
+  } else if (x == 9 && y == 9) {
+    return board[x][y] == ship || board[x][y-1] == ship || board[x-1][y-1] == ship || board[x-1][y] == ship;
+  };
+}
 // function to place 5 ships on the board
 function shipPlacement() {
   for (var a = 0; a < 5; a++) {
     // random placement for row
-    var x = Math.floor(Math.random() * boardRows);
+    var rowVal = Math.floor(Math.random() * boardRows);
     // random placement for column/cell
-    var y = Math.floor(Math.random() * boardCols);
+    var colVal = Math.floor(Math.random() * boardCols);
     // while loop to ense that a ship is no placed in duplicate positions
-    while (board[x][y] == ship) {
-      x = Math.floor(Math.random() * boardRows);
-      y = Math.floor(Math.random() * boardCols);
+    while (shipCheck(rowVal, colVal) == true) {
+      rowVal = Math.floor(Math.random() * boardRows);
+      colVal = Math.floor(Math.random() * boardCols);
     };
     // placement of ship on board
-    board[x][y] = ship;
+    board[rowVal][colVal] = ship;
     // Adds a class to the ship location
-    $("#cell" + x + y).addClass("ship");
+    $("#cell" + rowVal + colVal).addClass("ship");
     // logs the ship location on the console for our reference. WILL REMOVE AT END.
-    console.log("Ship #" + (a + 1) + " - row: " + x + "  col: " + y);
+    console.log("Ship #" + (a + 1) + " - row: " + rowVal + "  col: " + colVal);
   };
 }
+// function shipPlacement() {
+//   for (var a = 0; a < 5; a++) {
+//     // random placement for row
+//     var x = Math.floor(Math.random() * boardRows);
+//     // random placement for column/cell
+//     var y = Math.floor(Math.random() * boardCols);
+//     // while loop to ense that a ship is no placed in duplicate positions
+//     while (board[x][y] == ship) {
+//       x = Math.floor(Math.random() * boardRows);
+//       y = Math.floor(Math.random() * boardCols);
+//     };
+//     // placement of ship on board
+//     board[x][y] = ship;
+//     // Adds a class to the ship location
+//     $("#cell" + x + y).addClass("ship");
+//     // logs the ship location on the console for our reference. WILL REMOVE AT END.
+//     console.log("Ship #" + (a + 1) + " - row: " + x + "  col: " + y);
+//   };
+// }
+
+// function shipPlacement() {
+//   for (var a = 0; a < 5; a++) {
+//       // random placement for row
+//       var x = Math.floor(Math.random() * boardRows);
+//       console.log(a + ": " + x);
+//       // random placement for column/cell
+//       var y = Math.floor(Math.random() * boardCols);
+//       console.log(a + ": " + y);
+//       // board[x][y] = ship;
+//       // while loop to ensure that a ship is no placed in duplicate positions
+//       // x - 1 < 0 &&
+//       // y - 1 < 0 &&
+//       // x + 1 > 9 &&
+//       // y + 1 > 9 &&
+//       if (x > 0 && x < 9 && y > 0 && y < 9) {
+//         while (
+//           // x > 0 && x < 9 && y > 0 && y < 9 &&
+//         board[x][y] == ship ||
+//         board[x-1][y-1] == ship ||
+//         board[x-1][y] == ship ||
+//         board[x-1][y+1] == ship ||
+//         board[x][y-1] == ship ||
+//         board[x][y+1] == ship ||
+//         board[x+1][y-1] == ship ||
+//         board[x+1][y] == ship ||
+//         board[x+1][y+1] == ship) {
+//           x = Math.floor(Math.random() * boardRows);
+//           y = Math.floor(Math.random() * boardCols);
+//         };
+//         if (x == 0 && y > 0 && y < 9) {
+//           while (board[x][y] == ship || board[x][y-1] == ship || board[x][y+1] == ship || board[x+1][y] == ship || board[x+1][y-1] == ship || board[x+1][y+1] == ship) {
+//           x = Math.floor(Math.random() * boardRows);
+//           y = Math.floor(Math.random() * boardCols);
+//           };
+//           if (x == 9 && y > 0 && y < 9) {
+//             while (board[x][y] == ship || board[x][y-1] == ship || board[x][y+1] == ship || board[x-1][y] == ship || board[x-1][y-1] == ship || board[x-1][y+1] == ship) {
+//               x = Math.floor(Math.random() * boardRows);
+//               y = Math.floor(Math.random() * boardCols);
+//             };
+//             if (x > 0 && x < 9 && y == 0) {
+//               while (board[x][y] == ship || board[x-1][y] == ship || board[x+1][y] == ship || board[x-1][y+1] == ship || board[x][y+1] == ship || board[x+1][y+1] == ship) {
+//                 x = Math.floor(Math.random() * boardRows);
+//                 y = Math.floor(Math.random() * boardCols);
+//               };
+//             };
+//           };
+//         };
+//       }
+// // //       // } else if (x == 0 && y > 0 && y < 9) {
+// //       //   while (x == 0 && y > 0 && y < 9 && board[x][y] == ship || board[x][y-1] == ship || board[x][y+1] == ship || board[x+1][y] == ship || board[x+1][y-1] == ship || board[x+1][y+1] == ship) {
+// //       //     x = Math.floor(Math.random() * boardRows);
+// //       //     y = Math.floor(Math.random() * boardCols);
+// //       //   };
+// //       // // } else if (x == 9 && y > 0 && y < 9) {
+// //       //   while (x == 9 && y > 0 && y < 9 && board[x][y] == ship || board[x][y-1] == ship || board[x][y+1] == ship || board[x-1][y] == ship || board[x-1][y-1] == ship || board[x-1][y+1] == ship) {
+// //       //     x = Math.floor(Math.random() * boardRows);
+// //       //     y = Math.floor(Math.random() * boardCols);
+// //       //   };
+// //       // // } else if (x > 0 && x < 9 && y == 0) {
+// //       //   while (x > 0 && x < 9 && y == 0 && board[x][y] == ship || board[x-1][y] == ship || board[x+1][y] == ship || board[x-1][y+1] == ship || board[x][y+1] == ship || board[x+1][y+1] == ship) {
+// //       //     x = Math.floor(Math.random() * boardRows);
+// //       //     y = Math.floor(Math.random() * boardCols);
+// //       //   };
+// //       // // } else if (x > 0 && x < 9 && y == 9) {
+// //       //   while (x > 0 && x < 9 && y == 9 && board[x][y] == ship || board[x-1][y] == ship || board[x+1][y] == ship || board[x-1][y-1] == ship || board[x][y-1] == ship || board[x+1][y-1] == ship) {
+// //       //     x = Math.floor(Math.random() * boardRows);
+// //       //     y = Math.floor(Math.random() * boardCols);
+// //       //   };
+// //       // // } else if (x == 0 && y == 0) {
+// //       //   while (x == 0 && y == 0 && board[x][y] == ship || board[x][y+1] == ship || board[x+1][y] == ship || board[x+1][y+1] == ship) {
+// //       //     x = Math.floor(Math.random() * boardRows);
+// //       //     y = Math.floor(Math.random() * boardCols);
+// //       //   };
+// //       // // } else if (x == 0 && y == 9) {
+// //       //   while (x == 0 && y == 9 && board[x][y] == ship || board[x][y-1] == ship || board[x+1][y-1] == ship || board[x+1][y] == ship) {
+// //       //     x = Math.floor(Math.random() * boardRows);
+// //       //     y = Math.floor(Math.random() * boardCols);
+// //       //   };
+// //       // // } else if (x == 9 && y == 9) {
+// //       //   while (x == 9 && y == 9 && board[x][y] == ship || board[x][y-1] == ship || board[x-1][y-1] == ship || board[x-1][y] == ship) {
+// //       //     x = Math.floor(Math.random() * boardRows);
+// //       //     y = Math.floor(Math.random() * boardCols);
+// //       //   };
+// //       // // } else if (x == 9 && y == 0) {
+// //       //   while (x == 9 && y == 0 && board[x][y] == ship || board[x-1][y] == ship || board[x-1][y+1] == ship || board[x][y+1] == ship) {
+// //       //     x = Math.floor(Math.random() * boardRows);
+// //       //     y = Math.floor(Math.random() * boardCols);
+// //       //   };
+//     // placement of ship on board
+//     board[x][y] = ship;
+//     // Adds a class to the ship location
+//     $("#cell" + x + y).addClass("ship");
+//     // logs the ship location on the console for our reference. WILL REMOVE AT END.
+//     console.log("Ship #" + (a + 1) + " - row: " + x + "  col: " + y);
+//   };
+// }
+//
 
 var clickRow = 0;
 var clickCol = 0;
