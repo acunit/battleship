@@ -112,20 +112,7 @@ function fiveBlockPlacement() {
   };
   // $("#carrier").text("Carrier hits: " + var + " / 5") // TODO need var to pull in hits function
 }
-// function for making sure four block ship does not overlap another ship
-function shipCheckFour(row, col, direction) {
-  // if horizontal
-  if (direction == 0 && col > 4) {
-    return board[row][col] > 0 || board[row][col - 1] > 0 || board[row][col - 2] > 0 || board[row][col - 3] > 0;
-  } else if (direction == 0 && col < 5) {
-    return board[row][col] > 0 || board[row][col + 1] > 0 || board[row][col + 2] > 0 || board[row][col + 3] > 0;
-    // if verticle
-  } else if (direction == 1 && row > 4) {
-    return board[row][col] > 0 || board[row - 1][col] > 0 || board[row - 2][col] > 0 || board[row - 3][col] > 0;
-  } else if (direction == 1 && row < 5) {
-    return board[row][col] > 0 || board[row + 1][col] > 0 || board[row + 2][col] > 0 || board[row + 3][col] > 0;
-  }
-}
+
 var ship4 = 4;
 // function to place a verticle 4 block ship
 // TODO: NEED TO ADD SHIP CHECK FUNCTION TO THE 4 SHIP
@@ -136,64 +123,60 @@ function fourBlockPlacement() {
   // random placement for column/cell
   var colVal = Math.floor(Math.random() * boardCols);
   // while loop to determine whether or not a ship is already in position
-  while (shipCheckFour(rowVal, colVal, vertOrHorz) == true) {
-    vertOrHorz = Math.floor(Math.random() * 2);
-    rowVal = Math.floor(Math.random() * boardRows);
-    colVal = Math.floor(Math.random() * boardCols);
-  }
   if (vertOrHorz == 0 && colVal > 4) {
-    board[rowVal][colVal] = ship4;
-    board[rowVal][colVal - 1] = ship4;
-    board[rowVal][colVal - 2] = ship4;
-    board[rowVal][colVal - 3] = ship4;
-    $("#cell" + rowVal + colVal).addClass("ship4");
-    $("#cell" + rowVal + (colVal - 1)).addClass("ship4");
-    $("#cell" + rowVal + (colVal - 2)).addClass("ship4");
-    $("#cell" + rowVal + (colVal - 3)).addClass("ship4");
+    if (shipCheck(rowVal, colVal) || shipCheck(rowVal, colVal - 1) || shipCheck(rowVal, colVal - 2) || shipCheck(rowVal, colVal - 3)) {
+      fourBlockPlacement();
+    } else {
+      board[rowVal][colVal] = ship4 + shipFourNum;
+      board[rowVal][colVal - 1] = ship4 + shipFourNum;
+      board[rowVal][colVal - 2] = ship4 + shipFourNum;
+      board[rowVal][colVal - 3] = ship4 + shipFourNum;
+      $("#cell" + rowVal + colVal).addClass("ship4");
+      $("#cell" + rowVal + (colVal - 1)).addClass("ship4");
+      $("#cell" + rowVal + (colVal - 2)).addClass("ship4");
+      $("#cell" + rowVal + (colVal - 3)).addClass("ship4");
+    };
   } else if (vertOrHorz == 0 && colVal < 5) {
-    board[rowVal][colVal] = ship4;
-    board[rowVal][colVal + 1] = ship4;
-    board[rowVal][colVal + 2] = ship4;
-    board[rowVal][colVal + 3] = ship4;
-    $("#cell" + rowVal + colVal).addClass("ship4");
-    $("#cell" + rowVal + (colVal + 1)).addClass("ship4");
-    $("#cell" + rowVal + (colVal + 2)).addClass("ship4");
-    $("#cell" + rowVal + (colVal + 3)).addClass("ship4");
+      if (shipCheck(rowVal, colVal) || shipCheck(rowVal, colVal + 1) || shipCheck(rowVal, colVal + 2) || shipCheck(rowVal, colVal + 3)) {
+        fourBlockPlacement();
+    } else {
+      board[rowVal][colVal] = ship4 + shipFourNum;
+      board[rowVal][colVal + 1] = ship4 + shipFourNum;
+      board[rowVal][colVal + 2] = ship4 + shipFourNum;
+      board[rowVal][colVal + 3] = ship4 + shipFourNum;
+      $("#cell" + rowVal + colVal).addClass("ship4");
+      $("#cell" + rowVal + (colVal + 1)).addClass("ship4");
+      $("#cell" + rowVal + (colVal + 2)).addClass("ship4");
+      $("#cell" + rowVal + (colVal + 3)).addClass("ship4");
+    };
   } else if (vertOrHorz == 1 && rowVal > 4) {
-    board[rowVal][colVal] = ship4;
-    board[rowVal - 1][colVal] = ship4;
-    board[rowVal - 2][colVal] = ship4;
-    board[rowVal - 3][colVal] = ship4;
-    $("#cell" + rowVal + colVal).addClass("ship4");
-    $("#cell" + (rowVal - 1) + colVal).addClass("ship4");
-    $("#cell" + (rowVal - 2) + colVal).addClass("ship4");
-    $("#cell" + (rowVal - 3) + colVal).addClass("ship4");
+      if (shipCheck(rowVal, colVal) || shipCheck(rowVal - 1, colVal) || shipCheck(rowVal - 2, colVal) || shipCheck(rowVal - 3, colVal)) {
+        fourBlockPlacement();
+      } else {
+        board[rowVal][colVal] = ship4 + shipFourNum;
+        board[rowVal - 1][colVal] = ship4 + shipFourNum;
+        board[rowVal - 2][colVal] = ship4 + shipFourNum;
+        board[rowVal - 3][colVal] = ship4 + shipFourNum;
+        $("#cell" + rowVal + colVal).addClass("ship4");
+        $("#cell" + (rowVal - 1) + colVal).addClass("ship4");
+        $("#cell" + (rowVal - 2) + colVal).addClass("ship4");
+        $("#cell" + (rowVal - 3) + colVal).addClass("ship4");
+      };
   } else if (vertOrHorz == 1 && rowVal < 5) {
-    board[rowVal][colVal] = ship4;
-    board[rowVal + 1][colVal] = ship4;
-    board[rowVal + 2][colVal] = ship4;
-    board[rowVal + 3][colVal] = ship4;
-    $("#cell" + rowVal + colVal).addClass("ship4");
-    $("#cell" + (rowVal + 1) + colVal).addClass("ship4");
-    $("#cell" + (rowVal + 2) + colVal).addClass("ship4");
-    $("#cell" + (rowVal + 3) + colVal).addClass("ship4");
+      if (shipCheck(rowVal, colVal) || shipCheck(rowVal + 1, colVal) || shipCheck(rowVal + 2, colVal) || shipCheck(rowVal + 3, colVal)) {
+        fourBlockPlacement();
+      } else {
+        board[rowVal][colVal] = ship4 + shipFourNum;
+        board[rowVal + 1][colVal] = ship4 + shipFourNum;
+        board[rowVal + 2][colVal] = ship4 + shipFourNum;
+        board[rowVal + 3][colVal] = ship4 + shipFourNum;
+        $("#cell" + rowVal + colVal).addClass("ship4");
+        $("#cell" + (rowVal + 1) + colVal).addClass("ship4");
+        $("#cell" + (rowVal + 2) + colVal).addClass("ship4");
+        $("#cell" + (rowVal + 3) + colVal).addClass("ship4");
+      };
   };
   // $("#battleship").text("Battleship hits: " + var + " / 4") // TODO need var to pull in hits function
-}
-
-// function for making sure three block ship does not overlap another ship
-function shipCheckThree(row, col, direction) {
-  // if horizontal
-  if (direction == 0 && col > 4) {
-    return board[row][col] > 0 || board[row][col - 1] > 0 || board[row][col - 2] > 0;
-  } else if (direction == 0 && col < 5) {
-    return board[row][col] > 0 || board[row][col + 1] > 0 || board[row][col + 2] > 0;
-    // if verticle
-  } else if (direction == 1 && row > 4) {
-    return board[row][col] > 0 || board[row - 1][col] > 0 || board[row - 2][col] > 0;
-  } else if (direction == 1 && row < 5) {
-    return board[row][col] > 0 || board[row + 1][col] > 0 || board[row + 2][col] > 0;
-  }
 }
 
 var ship3 = 3
@@ -207,81 +190,54 @@ function threeBlockPlacement() {
   // random placement for column/cell
   var colVal = Math.floor(Math.random() * boardCols);
   // while loop to determine whether or not a ship is already in position
-  while (shipCheckThree(rowVal, colVal, vertOrHorz) == true) {
-    vertOrHorz = Math.floor(Math.random() * 2);
-    rowVal = Math.floor(Math.random() * boardRows);
-    colVal = Math.floor(Math.random() * boardCols);
-  }
   if (vertOrHorz == 0 && colVal > 4) {
-    board[rowVal][colVal] = ship3;
-    board[rowVal][colVal - 1] = ship3;
-    board[rowVal][colVal - 2] = ship3;
-    $("#cell" + rowVal + colVal).addClass("ship3");
-    $("#cell" + rowVal + (colVal - 1)).addClass("ship3");
-    $("#cell" + rowVal + (colVal - 2)).addClass("ship3");
+    if (shipCheck(rowVal, colVal) || shipCheck(rowVal, colVal - 1) || shipCheck(rowVal, colVal - 2)) {
+      threeBlockPlacement();
+    } else {
+      board[rowVal][colVal] = ship3 + shipThreeNum;
+      board[rowVal][colVal - 1] = ship3 + shipThreeNum;
+      board[rowVal][colVal - 2] = ship3 + shipThreeNum;
+      $("#cell" + rowVal + colVal).addClass("ship3");
+      $("#cell" + rowVal + (colVal - 1)).addClass("ship3");
+      $("#cell" + rowVal + (colVal - 2)).addClass("ship3");
+    };
   } else if (vertOrHorz == 0 && colVal < 5) {
-    board[rowVal][colVal] = ship3;
-    board[rowVal][colVal + 1] = ship3;
-    board[rowVal][colVal + 2] = ship3;
-    $("#cell" + rowVal + colVal).addClass("ship3");
-    $("#cell" + rowVal + (colVal + 1)).addClass("ship3");
-    $("#cell" + rowVal + (colVal + 2)).addClass("ship3");
+      if (shipCheck(rowVal, colVal) || shipCheck(rowVal, colVal + 1) || shipCheck(rowVal, colVal + 2)) {
+        threeBlockPlacement();
+    } else {
+      board[rowVal][colVal] = ship3 + shipThreeNum;
+      board[rowVal][colVal + 1] = ship3 + shipThreeNum;
+      board[rowVal][colVal + 2] = ship3 + shipThreeNum;
+      $("#cell" + rowVal + colVal).addClass("ship3");
+      $("#cell" + rowVal + (colVal + 1)).addClass("ship3");
+      $("#cell" + rowVal + (colVal + 2)).addClass("ship3");
+    };
   } else if (vertOrHorz == 1 && rowVal > 4) {
-    board[rowVal][colVal] = ship3;
-    board[rowVal - 1][colVal] = ship3;
-    board[rowVal - 2][colVal] = ship3;
-    $("#cell" + rowVal + colVal).addClass("ship3");
-    $("#cell" + (rowVal - 1) + colVal).addClass("ship3");
-    $("#cell" + (rowVal - 2) + colVal).addClass("ship3");
+      if (shipCheck(rowVal, colVal) || shipCheck(rowVal - 1, colVal) || shipCheck(rowVal - 2, colVal)) {
+        threeBlockPlacement();
+      } else {
+        board[rowVal][colVal] = ship3 + shipThreeNum;
+        board[rowVal - 1][colVal] = ship3 + shipThreeNum;
+        board[rowVal - 2][colVal] = ship3 + shipThreeNum;
+        $("#cell" + rowVal + colVal).addClass("ship3");
+        $("#cell" + (rowVal - 1) + colVal).addClass("ship3");
+        $("#cell" + (rowVal - 2) + colVal).addClass("ship3");
+      };
   } else if (vertOrHorz == 1 && rowVal < 5) {
-    board[rowVal][colVal] = ship3;
-    board[rowVal + 1][colVal] = ship3;
-    board[rowVal + 2][colVal] = ship3;
-    $("#cell" + rowVal + colVal).addClass("ship3");
-    $("#cell" + (rowVal + 1) + colVal).addClass("ship3");
-    $("#cell" + (rowVal + 2) + colVal).addClass("ship3");
+      if (shipCheck(rowVal, colVal) || shipCheck(rowVal + 1, colVal) || shipCheck(rowVal + 2, colVal)) {
+        threeBlockPlacement();
+      } else {
+        board[rowVal][colVal] = ship3 + shipThreeNum;
+        board[rowVal + 1][colVal] = ship3 + shipThreeNum;
+        board[rowVal + 2][colVal] = ship3 + shipThreeNum;
+        $("#cell" + rowVal + colVal).addClass("ship3");
+        $("#cell" + (rowVal + 1) + colVal).addClass("ship3");
+        $("#cell" + (rowVal + 2) + colVal).addClass("ship3");
+      };
   };
   // $("#cruiser").text("Cruiser hits: " + var + " / 3") // TODO need var to pull in hits function
 }
 
-// function for making sure two block ship does not overlap another ship
-function shipCheckTwo(row, col, direction) {
-  // if horizontal
-  if (direction == 0 && col > 4) {
-    while (shipCheck(row, col) == true && shipCheck(row, col-1) == true) {
-      direction = Math.floor(Math.random() * 2);
-      row = Math.floor(Math.random() * boardRows);
-      col = Math.floor(Math.random() * boardCols);
-      shipCheckTwo(row, col, direction);
-    };
-    return board[row][col] > 0 || board[row][col - 1] > 0;
-  } else if (direction == 0 && col < 5) {
-    while (shipCheck(row, col) == true && shipCheck(row, col+1) == true) {
-      direction = Math.floor(Math.random() * 2);
-      row = Math.floor(Math.random() * boardRows);
-      col = Math.floor(Math.random() * boardCols);
-      shipCheckTwo(row, col, direction);
-    };
-    return board[row][col] > 0 || board[row][col + 1] > 0;
-    // if verticle
-  } else if (direction == 1 && row > 4) {
-    while (shipCheck(row, col) == true && shipCheck(row-1, col) == true) {
-      direction = Math.floor(Math.random() * 2);
-      row = Math.floor(Math.random() * boardRows);
-      col = Math.floor(Math.random() * boardCols);
-      shipCheckTwo(row, col, direction);
-    };
-    return board[row][col] > 0 || board[row - 1][col] > 0;
-  } else if (direction == 1 && row < 5) {
-    while (shipCheck(row, col) == true && shipCheck(row+1, col) == true) {
-      direction = Math.floor(Math.random() * 2);
-      row = Math.floor(Math.random() * boardRows);
-      col = Math.floor(Math.random() * boardCols);
-      shipCheckTwo(row, col, direction);
-    };
-    return board[row][col] > 0 || board[row + 1][col] > 0;
-  };
-}
 var ship2 = 2
 // function to place a 2 block ship
 // TODO: NEED TO ADD SHIP CHECK FUNCTION TO THE 3 SHIP
@@ -292,33 +248,44 @@ function twoBlockPlacement() {
   var rowVal = Math.floor(Math.random() * boardRows);
   // random placement for column/cell
   var colVal = Math.floor(Math.random() * boardCols);
-  // while loop to determin whether or not a ship is already in position
-  while (shipCheckTwo(rowVal, colVal, vertOrHorz) == true) {
-    vertOrHorz = Math.floor(Math.random() * 2);
-    rowVal = Math.floor(Math.random() * boardRows);
-    colVal = Math.floor(Math.random() * boardCols);
-  }
+
   // if statement for placing ship on board and identifying class for where a ship is.
   if (vertOrHorz == 0 && colVal > 4) {
-    board[rowVal][colVal] = ship2;
-    board[rowVal][colVal - 1] = ship2;
-    $("#cell" + rowVal + colVal).addClass("ship2");
-    $("#cell" + rowVal + (colVal - 1)).addClass("ship2");
+    if (shipCheck(rowVal, colVal) || shipCheck(rowVal, colVal - 1)) {
+      twoBlockPlacement();
+    } else {
+      board[rowVal][colVal] = ship2 + shipTwoNum;
+      board[rowVal][colVal - 1] = ship2 + shipTwoNum;
+      $("#cell" + rowVal + colVal).addClass("ship2");
+      $("#cell" + rowVal + (colVal - 1)).addClass("ship2");
+    };
   } else if (vertOrHorz == 0 && colVal < 5) {
-    board[rowVal][colVal] = ship2;
-    board[rowVal][colVal + 1] = ship2;
-    $("#cell" + rowVal + colVal).addClass("ship2");
-    $("#cell" + rowVal + (colVal + 1)).addClass("ship2");
+      if (shipCheck(rowVal, colVal) || shipCheck(rowVal, colVal + 1)) {
+        twoBlockPlacement();
+    } else {
+      board[rowVal][colVal] = ship2 + shipTwoNum;
+      board[rowVal][colVal + 1] = ship2 + shipTwoNum;
+      $("#cell" + rowVal + colVal).addClass("ship2");
+      $("#cell" + rowVal + (colVal + 1)).addClass("ship2");
+    };
   } else if (vertOrHorz == 1 && rowVal > 4) {
-    board[rowVal][colVal] = ship2;
-    board[rowVal - 1][colVal] = ship2;
-    $("#cell" + rowVal + colVal).addClass("ship2");
-    $("#cell" + (rowVal - 1) + colVal).addClass("ship2");
+      if (shipCheck(rowVal, colVal) || shipCheck(rowVal - 1, colVal)) {
+        twoBlockPlacement();
+      } else {
+        board[rowVal][colVal] = ship2 + shipTwoNum;
+        board[rowVal - 1][colVal] = ship2 + shipTwoNum;
+        $("#cell" + rowVal + colVal).addClass("ship2");
+        $("#cell" + (rowVal - 1) + colVal).addClass("ship2");
+      };
   } else if (vertOrHorz == 1 && rowVal < 5) {
-    board[rowVal][colVal] = ship2;
-    board[rowVal + 1][colVal] = ship2;
-    $("#cell" + rowVal + colVal).addClass("ship2");
-    $("#cell" + (rowVal + 1) + colVal).addClass("ship2");
+      if (shipCheck(rowVal, colVal) || shipCheck(rowVal + 1, colVal)) {
+        twoBlockPlacement();
+      } else {
+        board[rowVal][colVal] = ship2 + shipTwoNum;
+        board[rowVal + 1][colVal] = ship2 + shipTwoNum;
+        $("#cell" + rowVal + colVal).addClass("ship2");
+        $("#cell" + (rowVal + 1) + colVal).addClass("ship2");
+      };
   };
     // $("#destroyer").text("Destroyer hits: " + var + " / 2") // TODO need var to pull in hits function
 }
@@ -352,28 +319,52 @@ var torpedoFires = 0;
 var hits = 0;
 var misses = 0;
 var carrierHits = 0;
-var battleshipHits = 0;
-var cruiserHits = 0;
-var destroyerHits = 0;
+var battleship1Hits = 0;
+var battleship2Hits = 0;
+var cruiser1Hits = 0;
+var cruiser2Hits = 0;
+var destroyer1Hits = 0;
+var destroyer2Hits = 0;
 var submarineHits = 0;
+var torpedoStock = Math.round((boardRows * boardCols) / 3);
+var possibleHits = 0;
+var shipFourNum = 0;
+var shipThreeNum = 0;
+var shipTwoNum = 0;
 
 // loads the functions we want to utilize once the page loads
 $(document).ready(function() {
   // Need to build our table first
   buildTable();
+  // Hide new game button
+  $("button").hide();
   // placement of 5 block ship on board
   fiveBlockPlacement();
+  possibleHits = possibleHits + 5;
   // placement of two 4 block ships on board
+  shipFourNum = shipFourNum + 0.1;
   fourBlockPlacement();
-  // fourBlockPlacement();
+  possibleHits = possibleHits + 4;
+  shipFourNum = shipFourNum + 0.1;
+  fourBlockPlacement();
+  possibleHits = possibleHits + 4;
   // placement of two 3 block ships on board
+  shipThreeNum = shipThreeNum + 0.1;
   threeBlockPlacement();
-  // threeBlockPlacement();
+  possibleHits = possibleHits + 3;
+  shipThreeNum = shipThreeNum + 0.1;
+  threeBlockPlacement();
+  possibleHits = possibleHits + 3;
   // placement of two 2 block ships on board
+  shipTwoNum = shipTwoNum + 0.1;
   twoBlockPlacement();
-  // twoBlockPlacement();
+  possibleHits = possibleHits + 2;
+  shipTwoNum = shipTwoNum + 0.1;
+  twoBlockPlacement();
+  possibleHits = possibleHits + 2;
   // placement of 1 block ship on the board
   oneBlockPlacement();
+  possibleHits = possibleHits + 1;
   // click function to determine a hit or a miss, and identify whether a cell was clicked.
   $(".cell").on("click", function() {
     // takes the data-index position from the cell that was clicked
@@ -394,27 +385,69 @@ $(document).ready(function() {
       $("#hitCounter").text(hits);
       carrierHits++;
       $("#carrierHits").text(carrierHits);
-    } else if (board[clickRow][clickCol] == 4) {
+      if (carrierHits == 5) {
+        $("#carrier").append("<span class='sunk'>SUNK</span>");
+      };
+    } else if (board[clickRow][clickCol] == 4.1) {
       console.log("HIT!");
       $(this).addClass("cellHit");
       hits++;
       $("#hitCounter").text(hits);
-      battleshipHits++;
-      $("#battleshipHits").text(battleshipHits);
-    } else if (board[clickRow][clickCol] == 3) {
+      battleship1Hits++;
+      $("#battleship1Hits").text(battleship1Hits);
+      if (battleship1Hits == 4) {
+        $("#battleship1").append("<span class='sunk'>SUNK</span>");
+      };
+    } else if (board[clickRow][clickCol] == 4.2) {
       console.log("HIT!");
       $(this).addClass("cellHit");
       hits++;
       $("#hitCounter").text(hits);
-      cruiserHits++;
-      $("#cruiserHits").text(cruiserHits);
-    } else if (board[clickRow][clickCol] == 2) {
+      battleship2Hits++;
+      $("#battleship2Hits").text(battleship2Hits);
+      if (battleship2Hits == 4) {
+        $("#battleship2").append("<span class='sunk'>SUNK</span>");
+      };
+    } else if (board[clickRow][clickCol] == 3.1) {
       console.log("HIT!");
       $(this).addClass("cellHit");
       hits++;
       $("#hitCounter").text(hits);
-      destroyerHits++;
-      $("#destroyerHits").text(destroyerHits);
+      cruiser1Hits++;
+      $("#cruiser1Hits").text(cruiser1Hits);
+      if (cruiser1Hits == 3) {
+        $("#cruiser1").append("<span class='sunk'>SUNK</span>");
+      };
+    } else if (board[clickRow][clickCol] == 3.2) {
+      console.log("HIT!");
+      $(this).addClass("cellHit");
+      hits++;
+      $("#hitCounter").text(hits);
+      cruiser2Hits++;
+      $("#cruiser2Hits").text(cruiser2Hits);
+      if (cruiser2Hits == 3) {
+        $("#cruiser2").append("<span class='sunk'>SUNK</span>");
+      };
+    } else if (board[clickRow][clickCol] == 2.1) {
+      console.log("HIT!");
+      $(this).addClass("cellHit");
+      hits++;
+      $("#hitCounter").text(hits);
+      destroyer1Hits++;
+      $("#destroyer1Hits").text(destroyer1Hits);
+      if (destroyer1Hits == 2) {
+        $("#destroyer1").append("<span class='sunk'>SUNK</span>");
+      };
+    } else if (board[clickRow][clickCol] == 2.2) {
+      console.log("HIT!");
+      $(this).addClass("cellHit");
+      hits++;
+      $("#hitCounter").text(hits);
+      destroyer2Hits++;
+      $("#destroyer2Hits").text(destroyer2Hits);
+      if (destroyer2Hits == 2) {
+        $("#destroyer2").append("<span class='sunk'>SUNK</span>");
+      };
     } else if (board[clickRow][clickCol] == 1) {
       console.log("HIT!");
       $(this).addClass("cellHit");
@@ -422,6 +455,7 @@ $(document).ready(function() {
       $("#hitCounter").text(hits);
       submarineHits++;
       $("#submarineHits").text(submarineHits);
+      $("#submarine").append("<span class='sunk'>SUNK</span>");
     } else {
       console.log("miss");
       misses++;
@@ -432,21 +466,32 @@ $(document).ready(function() {
     // counts the number of torpedo shots
     torpedoFires++;
     // updates the user with how many shots they have fired.
-    $("#shotCounter").text(torpedoFires + " / 25");
+    $("#shotCounter").text(torpedoFires + " / " + torpedoStock);
     // prevents a player from clicking on the same cell more than once and having it count.
-    if (hits == 15 && torpedoFires < 25) {
+    if (hits == possibleHits && torpedoFires < torpedoStock) {
       // Displays the win/loss status of the game
       $(".status").show();
       // Displays that the user has won
       $("#winLose").text("You Win!");
+      // Show button to allow player to start a new game.
+      $("button").show();
+      $("button").on("click", function() {
+        location.reload();
+      });
       // Prevents the user from being able to 'fire more torpedoes'.
       $(".cell").off("click");
-    } else if (hits < 15 && torpedoFires == 25) {
+
+    } else if (hits < possibleHits + 1 && torpedoFires == torpedoStock) {
       // Displays the win/loss status of the game
       $(".status").show();
       // Displays that the user has lost
       $("#winLose").text("You Lose.");
-      // addes a class to the cells with ships so that the missed ships are displayed
+      // Show button to allow player to start a new game.
+      $("button").show();
+      $("button").on("click", function() {
+        location.reload();
+      });
+      // adds a class to the cells with ships so that the missed ships are displayed
       $(".ship").addClass("missedShip");
       $(".ship2").addClass("missedShip");
       $(".ship3").addClass("missedShip");
