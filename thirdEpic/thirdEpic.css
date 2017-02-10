@@ -12,6 +12,14 @@
   background-color: purple;
 }
 
+.ship3 {
+  background-color: yellow;
+}
+
+.ship2 {
+  background-color: orange;
+}
+
 .ship {
   background-color: darkgray;
 }
@@ -36,4 +44,12 @@
 
 .status {
   display: none;
+}
+
+.container {
+  display: flex;
+}
+
+.flexShipStatus {
+  padding-left: 10px;
 }

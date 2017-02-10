@@ -11,11 +11,22 @@
   <body>
     <h1>Battleship</h1>
     <h2>Third Epic</h2>
-    <table id="board">
-    </table>
+    <div class="container">
+      <div class="flexItem flexBoard">
+        <table id="board"></table>
+      </div>
+      <div class="flexItem flexShipStatus">
+        <h3>Status of ships:</h3>
+        <p id="carrier">Aircraft Carrier: <a id="carrierHits"></a>/5</p>
+        <p id="battleship">Battleship: <a id="battleshipHits"></a>/4</p>
+        <p id="cruiser">Cruiser: <a id="cruiserHits"></a>/3</p>
+        <p id="destroyer">Destroyer: <a id="destroyerHits"></a>/2</p>
+        <p id="submarine">Submarine: <a id="submarineHits"></a>/1</p>
+      </div>
+    </div>
     <h3>Torpedoes Fired: <a id="shotCounter"></a></h3>
     <h3>Hits: <a id="hitCounter"></a></h3>
     <h3>Misses: <a id="missCounter"></a></h3>
-    <h2 class="status">Status: <a id="winLose"></a></h2>
+    <h2 class="status">Result: <a id="winLose"></a></h2>
   </body>
 </html>
