@@ -48,8 +48,22 @@
 
 .container {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  flex-flow: row wrap;;
 }
+
 
 .flexShipStatus {
   padding-left: 10px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.flexBoard {
+  align-items: center;
+  justify-content: center;
 }
