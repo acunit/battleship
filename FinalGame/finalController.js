@@ -3,7 +3,7 @@
 var clickRow = 0;
 var clickCol = 0;
 var clickPosition;
-var torpedoFires = 49;
+var torpedoFires = 0;
 var hits = 0;
 var misses = 0;
 var carrierHits = 0;
