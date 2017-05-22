@@ -116,6 +116,22 @@ h3 {
   margin-right: 25%;
 }
 
+.resultReset {
+  display: inline;
+}
+
+#resetButton {
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 13px 28px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-left: 10%;
+}
+
 .sunk {
   font-size: 20px;
   font-weight: bold;
